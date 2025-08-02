@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Mic Test</title>
+</head>
+<body>
+  <h2>Listening...</h2>
+  <script>
+    function startRecognition() {
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = 'en-US';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      recognition.onresult = function(event) {
+        const result = event.results[0][0].transcript;
+        document.body.innerHTML = "<h2>" + result + "</h2>";
+      };
+
+      recognition.onerror = function(event) {
+        document.body.innerHTML = "<h2>Error: " + event.error + "</h2>";
+      };
+
+      recognition.start();
+    }
+
+    window.onload = function() {
+      startRecognition(); // 페이지 열리면 자동 실행
+    };
+  </script>
+</body>
+</html>
